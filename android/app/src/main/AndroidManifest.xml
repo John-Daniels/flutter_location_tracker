@@ -2,6 +2,8 @@
     package="com.example.location_tracker">
   
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
   
    <application
         android:label="location_tracker"
@@ -37,6 +39,6 @@
             android:value="2" />
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="YOURAPIKEY"/>
+               android:value="AIzaSyCYwWvZ5y8SUAFq54cw97e3jFDtADeCeNk"/>
     </application>
 </manifest>

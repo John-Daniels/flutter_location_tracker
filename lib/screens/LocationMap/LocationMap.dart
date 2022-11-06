@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:location/location.dart';
 import 'package:location_tracker/constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -17,18 +19,31 @@ class _LocationMapState extends State<LocationMap> {
   late IO.Socket socket;
   late Map<MarkerId, Marker> _markers;
   final Completer<GoogleMapController> _controller = Completer();
-
-  static const CameraPosition _cameraPosition =
-      CameraPosition(target: LatLng(6.503557, 3.3456956), zoom: 20);
+  LocationData? currentLocation;
+  CameraPosition? _cameraPosition;
 
   @override
   void initState() {
-    super.initState();
+    getCurrentLocation();
 
     listen();
 
     _markers = <MarkerId, Marker>{};
     _markers.clear();
+
+    super.initState();
+  }
+
+  getCurrentLocation() {
+    Location location = Location();
+
+    location.getLocation().then(((coords) {
+      currentLocation = coords;
+      _cameraPosition = CameraPosition(
+          target: LatLng(coords.latitude!, coords.longitude!), zoom: 19);
+
+      setState(() {});
+    }));
   }
 
   listen() async {
@@ -85,17 +100,24 @@ class _LocationMapState extends State<LocationMap> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: GoogleMap(
-          initialCameraPosition: _cameraPosition,
-          mapType: MapType.normal,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          markers: Set<Marker>.of(_markers.values),
-        ),
-      ),
+    return Scaffold(
+      body: currentLocation == null
+          ? Center(
+              child: LoadingAnimationWidget.flickr(
+                leftDotColor: const Color(0xFF1A1A3F),
+                rightDotColor: const Color(0xFFEA3799),
+                // color: Colors.red,
+                size: 70,
+              ),
+            )
+          : GoogleMap(
+              initialCameraPosition: _cameraPosition!,
+              mapType: MapType.normal,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              markers: Set<Marker>.of(_markers.values),
+            ),
     );
   }
 

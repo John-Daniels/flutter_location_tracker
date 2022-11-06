@@ -22,8 +22,9 @@ class _LocationFormState extends State<LocationForm> {
 
   @override
   void initState() {
-    super.initState();
     listen();
+
+    super.initState();
   }
 
   listen() async {

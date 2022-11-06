@@ -1,5 +1,24 @@
 # location_tracker
 
+## One of my most awesome projects... showcasing realtime update of location when inputed.
+
+## Technologies used
+
+- [x] Flutter
+- [x] Nodejs & Express
+- [x] Google Maps
+- [x] Socket.io
+
+![screenshot1](./showcase/location_tracker1.png)
+
+## Inputing the location
+
+![screenshot1](./showcase/location_tracker2.png)
+
+## The location map
+
+![screenshot1](./showcase/location_tracker3.png)
+
 A new Flutter project.
 
 ## Getting Started

@@ -38,6 +38,8 @@ dependencies:
   socket_io_client: ^2.0.0
   snippet_coder_utils: ^1.0.12
   google_maps_flutter: ^2.2.1
+  location: ^4.4.0
+  loading_animation_widget: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
